@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdio.h>  
-#include <thread> ]
+#include <thread>
 #include "TestaPrimo.h"        
 
 using namespace std;
