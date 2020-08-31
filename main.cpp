@@ -5,35 +5,38 @@
 
 using namespace std;
 
+//ra: 222.170.36-7
 int P = 170 * 367;
 int quantNumerosPrimos = 0;
 int countPrimo = 0;
 int numPrimos[222];
 
-int checkPrimos1(){			
- 	int numeroAtual = P-2;
+int checkPrimosPar(){			
+ 	int indexNum = P-2;
+ 	
 	while(quantNumerosPrimos < 222){
-		if (TestaPrimo3(numeroAtual)){
-			if(numeroAtual != 2){
-				countPrimo += numeroAtual;
-				numPrimos[quantNumerosPrimos] = numeroAtual;
+		if (TestaPrimo3(indexNum)){
+			if(indexNum != 2){
+				countPrimo += indexNum;
+				numPrimos[quantNumerosPrimos] = indexNum;
 				quantNumerosPrimos++;
 			}
 			
 		}
-		numeroAtual-=2;
+		indexNum-=2;
 	}
 }
 
-int checkPrimos2(){	
-  	int numeroAtual = P-1;	
+int checkPrimosImp(){	
+  	int indexNum = P-1;	
+  	
 	while(quantNumerosPrimos < 222){
-		if (TestaPrimo3(numeroAtual)){
-			numPrimos[quantNumerosPrimos] = numeroAtual;
+		if (TestaPrimo3(indexNum)){
+			numPrimos[quantNumerosPrimos] = indexNum;
 			quantNumerosPrimos++;
-			countPrimo+= numeroAtual;
+			countPrimo+= indexNum;
 		}
-		numeroAtual-=2;
+		indexNum-=2;
 	}	
 }
 
@@ -45,14 +48,21 @@ void imprimir(){
 
 int main(int argc, char** argv) {
 	
-	thread thread1 (checkPrimos1);
-	thread thread2 (checkPrimos2);
-	thread1.join();                
-	thread2.join();
+	if(P > 5000){
+		thread imparT (checkPrimosImp);
+		thread parT (checkPrimosPar);
+		
+		//thread 1
+		imparT.join();  
+		  
+		//thread2            
+		parT.join();
+	}
 	
 	imprimir();
 	
-	cout << "Soma dos numeros primos: " << countPrimo << endl;
+	cout << endl << "Multiplicacao: " << 170*367 << endl;
+	cout << "Soma primos: " << countPrimo << endl;
 		
 	return 0;
 }
@@ -76,7 +86,7 @@ int TestaPrimo3(int n) {
 
 
 int TestaPrimo1(int n) {
-    int EhPrimo = 1, //em princípio, n é primo
+    int EhPrimo = 1, //em princÃ­pio, n Ã© primo
         d=2;
     if (n <= 1)
     EhPrimo = 0;
@@ -92,7 +102,7 @@ int TestaPrimo1(int n) {
 
 int TestaPrimo2(int n) {
     
-    int EhPrimo = 1, //em princípio, n é primo
+    int EhPrimo = 1, //em princÃ­pio, n Ã© primo
         d=2,
         resto;
     if (n <= 1)
@@ -109,7 +119,7 @@ int TestaPrimo2(int n) {
 
 
 int TestaPrimo4(int n) {
-    int EhPrimo, //em princípio, n é primo
+    int EhPrimo, //em princÃ­pio, n Ã© primo
         d=3;
     if (n <= 1 || (n != 2 && n % 6 == 1 && n % 6 == 5))
         EhPrimo = 0;    /* nenhum numero inteiro <= 1 ou ~ adjacente a 6 eh primo */
